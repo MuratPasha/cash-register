@@ -8,7 +8,12 @@ type Item struct {
 	Discount float64
 }
 
-
+func (i Item) Description() string {
+	if i.Discount != 0 {
+		return fmt.Sprintf("%s - %.2f (%.2f with discount)", i.Name, i.Price, i.Price*i.Discount)
+	}
+	return fmt.Sprintf("%s - %.2f", i.Name, i.Price)
+}
 
 func CalculatePrice(item Item) float64 {
 	if item.Discount != 0 {
@@ -26,10 +31,5 @@ func TotalPrice(items []Item) float64 {
 }
 
 type Descripable interface {
-	func (i Item) Description() string {
-		if i.Discount != 0 {
-			return fmt.Sprintf("%s - %.2f (%.2f with discount)", i.Name, i.Price, i.Price*i.Discount)
-		}
-		return fmt.Sprintf("%s - %.2f", i.Name, i.Price)
-	}
+	Description() string
 }
